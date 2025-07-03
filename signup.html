@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sign Up - MUG Clothing</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="login-container">
+    <h2>Sign Up</h2>
+    <input type="text" id="newUser" placeholder="Choose a username" />
+    <button onclick="signup()">Create Account</button>
+    <a href="login.html">Already have an account? Login</a>
+  </div>
+
+  <script>
+    function signup() {
+      const name = document.getElementById("newUser").value.trim();
+      if (name === "") {
+        alert("Please enter a username");
+        return;
+      }
+      // Fake register, just save name as current user
+      localStorage.setItem("user", name);
+      alert("Account created & logged in!");
+      window.location.href = "index.html";
+    }
+  </script>
+</body>
+</html>

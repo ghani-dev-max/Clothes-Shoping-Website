@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Product Detail</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="logo">👕 Product Details</div>
+    <nav><a href="index.html">← Back to Shop</a></nav>
+  </header>
+
+  <section class="product-detail" id="productDetail"></section>
+
+  <script>
+    const products = [
+      {
+        name: 'Classic T-Shirt',
+        price: 15,
+        category: 'T-Shirt',
+        image: 'tshirt1.jpg'
+      },
+      {
+        name: 'Winter Hoodie',
+        price: 29.99,
+        category: 'Hoodie',
+        image: 'hoodie1.jpg'
+      },
+      {
+        name: 'Denim Jeans',
+        price: 35,
+        category: 'Jeans',
+        image: 'jeans1.jpg'
+      }
+    ];
+
+    const params = new URLSearchParams(window.location.search);
+    const name = params.get('name');
+    const product = products.find(p => p.name === name);
+    const container = document.getElementById('productDetail');
+
+    if (product) {
+      container.innerHTML = `
+        <img src="${product.image}" alt="${product.name}" width="250" height="300" />
+        <h2>${product.name}</h2>
+        <p><strong>Category:</strong> ${product.category}</p>
+        <p><strong>Price:</strong> $${product.price}</p>
+        <p><strong>Rating:</strong> ⭐ 4.5 (233 reviews)</p>
+        <p>“Excellent fit and quality!” – A customer</p>
+        <button onclick="addToCart('${product.name}', ${product.price})">Add to Cart</button>
+      `;
+    } else {
+      container.innerHTML = `<p>Product not found.</p>`;
+    }
+
+    function addToCart(name, price) {
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      const existing = cart.find(item => item.name === name);
+      if (existing) {
+        existing.quantity += 1;
+      } else {
+        cart.push({ name, price, quantity: 1 });
+      }
+      localStorage.setItem("cart", JSON.stringify(cart));
+      alert("Added to cart!");
+    }
+  </script>
+</body>
+</html>

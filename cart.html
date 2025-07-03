@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Cart</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="logo">🛍️ Your Cart</div>
+    <nav><a href="index.html">← Continue Shopping</a></nav>
+  </header>
+
+  <div id="user-status" style="text-align:center; font-weight:bold;"></div>
+
+  <section class="cart">
+    <h2>Items in Cart</h2>
+    <div id="cart-items"></div>
+    <h3>Total: $<span id="total">0.00</span></h3>
+    <button onclick="checkout()">Checkout</button>
+  </section>
+
+  <script>
+    const user = localStorage.getItem("user");
+    const statusDiv = document.getElementById("user-status");
+    if (user) {
+      statusDiv.innerHTML = `Logged in as: <span style="color:green">${user}</span>`;
+    } else {
+      statusDiv.innerHTML = `⚠️ You are not logged in. <a href="login.html">Login here</a>`;
+    }
+
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const container = document.getElementById("cart-items");
+    let total = 0;
+    cart.forEach((item, i) => {
+      total += item.price * item.quantity;
+      container.innerHTML += `
+        <div>
+          ${item.name} x ${item.quantity} - $${(item.price * item.quantity).toFixed(2)}
+          <button onclick="removeItem(${i})">Remove</button>
+        </div>
+      `;
+    });
+    document.getElementById("total").textContent = total.toFixed(2);
+
+    function removeItem(index) {
+      cart.splice(index, 1);
+      localStorage.setItem("cart", JSON.stringify(cart));
+      location.reload();
+    }
+
+    function checkout() {
+      alert("Thank you! Your order is placed.");
+      localStorage.removeItem("cart");
+      location.reload();
+    }
+  </script>
+</body>
+</html>

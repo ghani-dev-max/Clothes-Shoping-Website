@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MUG Clothing Shop</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header>
+    <div class="logo">👕 MUG Clothing</div>
+    <nav>
+      <input type="text" id="searchBar" placeholder="Search products...">
+      <select id="categoryFilter" onchange="filterByCategory()">
+        <option value="all">All</option>
+        <option value="T-Shirt">T-Shirts</option>
+        <option value="Hoodie">Hoodies</option>
+        <option value="Jeans">Jeans</option>
+      </select>
+      <a href="cart.html">🛒 <span id="cart-count">0</span> | $<span id="cart-total">0</span></a>
+      <span id="auth-area"></span>
+    </nav>
+  </header>
+
+  <section class="shop">
+    <h2>Our Collection</h2>
+    <div class="products" id="productList"></div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 MUG Clothing. All rights reserved.</p>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    updateCartSummary();
+    const user = localStorage.getItem("user");
+    const authArea = document.getElementById("auth-area");
+    if (user) {
+      authArea.innerHTML = `👤 ${user} | <a href="logout.html">Logout</a>`;
+    } else {
+      authArea.innerHTML = `<a href="login.html">Login</a>`;
+    }
+  </script>
+</body>
+</html>
